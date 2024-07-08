@@ -23,4 +23,4 @@ jobs:
           kakao_access_token: ${{ secrets.KAKAO_ACCESS_TOKEN }}
           function_name: send_to_me_custom
           template_id: "109803"
-          template_args: '{"title": ${{GITHUB_EVENT_NAME}}, "desc": ${{GITHUB_EVENT_NAME}}+"! Please check it."}'
+          template_args: '{"title": $GITHUB_EVENT_NAME, "desc": "$GITHUB_EVENT_NAME! Please check it."}'
