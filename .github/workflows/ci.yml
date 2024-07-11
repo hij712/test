@@ -48,5 +48,10 @@ jobs:
           kakao_access_token: ${{ secrets.KAKAO_ACCESS_TOKEN }}
           function_name: send_to_me_custom
           template_id: "109803"
-          template_args: '{"title": "${{ github.event_name }}", "desc": "${{ env.COMMIT_DESCRIPTION }}"}'
+          template_args: |
+            {
+              "title": "${{ github.event_name }}", 
+              "commit_title": "${{ env.COMMIT_TITLE }}", 
+              "desc": "${{ env.COMMIT_DESCRIPTION }}"
+            }
           
