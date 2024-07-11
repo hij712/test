@@ -25,7 +25,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Send KakaoTalk notification
-        if: failure()  # Uncommented the conditional execution
+        # if: failure()
         uses: Alfex4936/kakaotalk-ci-action@main
         with:
           kakao_access_token: ${{ secrets.KAKAO_ACCESS_TOKEN }}
