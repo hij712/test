@@ -3,7 +3,7 @@ name: Backend Discord Webhook Notify
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     types: [opened, closed]
 
@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
     - name: Notify Push
       if: github.event_name == 'push'
       uses: rjstone/discord-webhook-notify@v1
