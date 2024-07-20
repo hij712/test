@@ -1,0 +1,39 @@
+name: Backend Discord Webhook Notify
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, closed]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Notify Push
+      if: github.event_name == 'push'
+      uses: rjstone/discord-webhook-notify@v1
+      with:
+        severity: info
+        details: |
+          **Backend Repository: Push Event**
+          Repository: ${{ github.repository }}
+          Ref: ${{ github.ref }}
+          Commit: ${{ github.sha }}
+          Actor: ${{ github.actor }}
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+    - name: Notify Pull Request
+      if: github.event_name == 'pull_request'
+      uses: rjstone/discord-webhook-notify@v1
+      with:
+        severity: info
+        details: |
+          **Backend Repository: Pull Request Event**
+          Repository: ${{ github.repository }}
+          Action: ${{ github.event.action }}
+          Pull Request: ${{ github.event.pull_request.html_url }}
+          Actor: ${{ github.actor }}
+        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
