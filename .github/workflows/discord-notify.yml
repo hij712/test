@@ -12,28 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Notify Push
-      if: github.event_name == 'push'
+    - name: Send notification
+      if: always()
       uses: rjstone/discord-webhook-notify@v1
       with:
-        severity: info
+        severity: ${{ job.status == 'success' && 'info' || 'error' }}
         details: |
-          **Backend Repository: Push Event**
+          **Backend Repository: Workflow Notification**
           Repository: ${{ github.repository }}
+          Event: ${{ github.event_name }}
           Ref: ${{ github.ref }}
           Commit: ${{ github.sha }}
           Actor: ${{ github.actor }}
-        webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-
-    - name: Notify Pull Request
-      if: github.event_name == 'pull_request'
-      uses: rjstone/discord-webhook-notify@v1
-      with:
-        severity: info
-        details: |
-          **Backend Repository: Pull Request Event**
-          Repository: ${{ github.repository }}
-          Action: ${{ github.event.action }}
-          Pull Request: ${{ github.event.pull_request.html_url }}
-          Actor: ${{ github.actor }}
+          Status: ${{ job.status }}
         webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
